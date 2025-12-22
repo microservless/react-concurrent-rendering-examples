@@ -14,7 +14,11 @@ export function DeferredQuery() {
                 {isDeferredQueryEnabled ? 'Deferred enabled' : 'Deferred disabled'}
             </button>
             <input value={query} type="text" onChange={(e) => setQuery(e.target.value)}/>
-            <SlowCountries query={isDeferredQueryEnabled ? deferredQuery : query}/>
+            <div style={{
+                opacity: isDeferredQueryEnabled && deferredQuery !== query ? 0.5 : 1
+            }}>
+                <SlowCountries query={isDeferredQueryEnabled ? deferredQuery : query}/>
+            </div>
         </div>
     )
 }
