@@ -1,8 +1,21 @@
 import * as React from 'react'
 import './App.css'
-import {DeferredQuery} from "./examples/DeferredQuery.tsx";
-
+import {DeferredValue} from "./examples/deferred-value/DeferredValue.tsx";
+// import { ErrorBoundary } from 'react-error-boundary';
+import { AddCommentContainer } from './examples/transition/Transition.tsx';
+import {ErrorBoundary} from "./components/ErrorBoundary.tsx";
 type Tab = 'example1' | 'example2' | 'example3'
+
+function fallbackRender({ error, resetErrorBoundary }) {
+  // Call resetErrorBoundary() to reset the error boundary and retry the render.
+
+  return (
+    <div role="alert">
+      <p>Something went wrong:</p>
+      <pre style={{ color: "red" }}>{error.message}</pre>
+    </div>
+  );
+}
 
 function App() {
   const [activeTab, setActiveTab] = React.useState<Tab>('example1')
@@ -33,20 +46,13 @@ function App() {
       </div>
 
       <div className="tab-content">
-        {activeTab === 'example1' && <DeferredQuery />}
-        {activeTab === 'example2' && <Example2 />}
-        {activeTab === 'example3' && <Example3 />}
+        <ErrorBoundary>
+          {activeTab === 'example1' && <DeferredValue />}
+          {activeTab === 'example2' && <AddCommentContainer />}
+          {activeTab === 'example3' && <Example3 />}
+        </ErrorBoundary>
       </div>
     </>
-  )
-}
-
-function Example2() {
-  return (
-    <div className="card">
-      <h2>Example 2</h2>
-      <p>Add your second example here</p>
-    </div>
   )
 }
 

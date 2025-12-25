@@ -1,7 +1,7 @@
 export const SlowCountriesList = ({country}: {country: {name: string; code: string;}})=> {
     const start = performance.now();
 
-    while (performance.now() - start < 2) {
+    while (performance.now() - start < 3) {
         // imitate slow rerendering
     }
 
